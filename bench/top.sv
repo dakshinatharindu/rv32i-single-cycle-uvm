@@ -7,11 +7,9 @@ module top;
    core_wrapper dut(_if.core_md);
    
    initial begin
-    // uvm_config_db #(virtual switch_if)::set(null, "uvm_test_top", "sw_if", sw_if);
+    uvm_config_db #(virtual core_if)::set(null, "uvm_test_top.*", "_if", _if);
     
-    // run_test();
-    $display("imported successfully");
-    $finish();
+    run_test();
    end   
       
 endmodule // top
