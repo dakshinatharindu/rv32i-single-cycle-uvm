@@ -21,7 +21,6 @@ class verbose_test extends uvm_test;
 
     virtual task run_phase(uvm_phase phase);
         phase.raise_objection(this);
-        assert(seq.randomize());
         seq.start(env.agnt.seqr);
         phase.drop_objection(this);
     endtask

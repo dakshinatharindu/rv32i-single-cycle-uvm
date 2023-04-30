@@ -1,4 +1,4 @@
-class driver extends uvm_driver #(instr);
+class driver extends uvm_driver #(instruction);
 
     `uvm_component_utils(driver)
 
@@ -16,7 +16,7 @@ class driver extends uvm_driver #(instr);
 
     task run_phase(uvm_phase phase);
         forever begin
-            instr op;
+            instruction op;
             @(negedge _if.clk);
             seq_item_port.get(op);
             `uvm_info("DRIVER", $sformatf("Got:\t%s", op.convert2str()), UVM_MEDIUM)

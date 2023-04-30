@@ -8,7 +8,7 @@ package core_pkg;
     
 
     // uvm_transactions
-    `include "instr.svh"
+    `include "instruction.svh"
 
     // uvm_sequences
     `include "instr_seq.svh"
