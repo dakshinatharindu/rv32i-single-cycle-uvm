@@ -9,11 +9,13 @@ package core_pkg;
 
     // uvm_transactions
     `include "instruction.svh"
+    `include "res.svh"
 
     // uvm_sequences
     `include "instr_seq.svh"
 
     // uvm_subscribers
+    // `include "monitor.svh"
     `include "driver.svh"
 
     // uvm_agents
