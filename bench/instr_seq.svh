@@ -2,13 +2,15 @@ class instr_seq extends uvm_sequence #(instruction, res);
 
     `uvm_object_utils(instr_seq)
 
-    int file;
-    logic [31:0] instr;
-
+    logic [31:0] instr_addr = 32'h0;
+    logic [7:0] instr_mem [1024];
     function new(string name = "instr_seq");
         super.new(name);
-        file = $fopen("./bench/program.txt", "r");
-        if (!file) `uvm_fatal("SEQ", "program file was not found");
+        $readmemh("./bench/g.hex", instr_mem);
+    endfunction
+
+    function logic [31:0] instr_mem_read(logic [9:0] addr);
+        return {instr_mem[addr+3], instr_mem[addr+2], instr_mem[addr+1], instr_mem[addr]};
     endfunction
 
     virtual task body();
@@ -22,18 +24,17 @@ class instr_seq extends uvm_sequence #(instruction, res);
         get_response(rsp);
         `uvm_info("SEQ", $sformatf("Got:\t%s", rsp.convert2str()), UVM_MEDIUM)
         
-        while(!$feof(file)) begin
+        repeat(50) begin
             instruction op = instruction::type_id::create("op");
             res rsp;
-            $fscanf(file, "%h\n", instr);
             start_item(op);
             assert (op.randomize());
-            op.load_data(instr);
+            op.load_data(instr_mem_read(instr_addr));
             `uvm_info("SEQ", $sformatf("Sent:\t%s", op.convert2str()), UVM_MEDIUM)
             finish_item(op);
             get_response(rsp);
             `uvm_info("SEQ", $sformatf("Got:\t%s", rsp.convert2str()), UVM_MEDIUM)
+            instr_addr = rsp.nxt_instr;
         end
-        $fclose(file);
     endtask
 endclass

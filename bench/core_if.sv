@@ -4,7 +4,7 @@ interface core_if;
     logic   [31:0]      instr;
     logic   [31:0]      mem_rd_d;
     logic               vld;
-    logic   [8:0]       nxt_instr;
+    logic   [9:0]       nxt_instr;
     logic   [31:0]      alu_out;
     logic   [31:0]      mem_wr_d;
     logic               mem_rd;

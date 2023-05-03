@@ -810,7 +810,7 @@ module Core(
   input  [31:0] io_instr,
   input  [31:0] io_memReadData,
   input         io_valid,
-  output [8:0]  io_instrAddrs,
+  output [9:0]  io_instrAddrs,
   output [31:0] io_ALUOut,
   output [31:0] io_memWriteData,
   output        io_memRead,
@@ -895,7 +895,6 @@ module Core(
   wire [1:0] loadSelector_io_byteSel; // @[Core.scala 36:28]
   wire [31:0] loadSelector_io_inData; // @[Core.scala 36:28]
   wire [31:0] loadSelector_io_outData; // @[Core.scala 36:28]
-  wire [31:0] _io_instrAddrs_T = {{2'd0}, pc_io_outAddr[31:2]}; // @[Core.scala 99:35]
   ControlUnit controlUnit ( // @[Core.scala 22:27]
     .io_instr(controlUnit_io_instr),
     .io_eq(controlUnit_io_eq),
@@ -1004,7 +1003,7 @@ module Core(
     .io_inData(loadSelector_io_inData),
     .io_outData(loadSelector_io_outData)
   );
-  assign io_instrAddrs = _io_instrAddrs_T[8:0]; // @[Core.scala 99:42]
+  assign io_instrAddrs = pc_io_outAddr[9:0]; // @[Core.scala 99:35]
   assign io_ALUOut = alu_io_ALUOut; // @[Core.scala 98:13]
   assign io_memWriteData = registerFile_io_readData2; // @[Core.scala 100:48]
   assign io_memRead = controlUnit_io_memRead; // @[Core.scala 96:14]

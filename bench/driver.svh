@@ -28,7 +28,6 @@ class driver extends uvm_driver #(instruction, res);
             
             @(posedge _if.clk);
             #3;
-            // $display("%h", _if.nxt_instr);
             rsp = res::type_id::create("rsp");
             rsp.nxt_instr = _if.nxt_instr;
             rsp.alu_out = _if.alu_out;
