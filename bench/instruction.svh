@@ -4,10 +4,8 @@ class instruction extends uvm_sequence_item;
 
     logic                   rstn;
     logic       [31:0]      instr;
-    rand logic  [31:0]      mem_rd_d;
-    rand logic              vld;
-
-    constraint vld_range {vld dist { 0 := 1, 1 := 9};}
+    logic       [31:0]      mem_rd_d;
+    logic                   vld;
 
     function new(string name = "instruction");
         super.new(name);
@@ -17,8 +15,10 @@ class instruction extends uvm_sequence_item;
         return $sformatf("rstn=%h, vld=%h, instr=%h, mem_rd_d=%h", rstn, vld, instr, mem_rd_d);
     endfunction
 
-    function void load_data(logic [31:0] i, logic r = 0);
+    function void load_data(logic [31:0] i, logic [31:0] d, logic r = 0, logic v = 1);
         instr = i;
+        mem_rd_d = d;
         rstn = r;
+        vld = v;
     endfunction
 endclass
